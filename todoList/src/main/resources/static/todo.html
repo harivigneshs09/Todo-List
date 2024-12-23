@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="todo-container">
+        <h1>To-Do List</h1>
+        <form class="todo-form">
+            <input type="text" class="todo-input" placeholder="Add new task">
+            <button type="button" class="add-btn">Add Task</button>
+        </form>
+        <ul class="todo-list"></ul>
+    </div>
+    <script>
+        const todoInput = document.querySelector(".todo-input");
+        const addBtn = document.querySelector(".add-btn");
+        const todoList = document.querySelector(".todo-list");
+
+        // Fetch and display existing todos
+        fetch('/api/todos')
+            .then(response => response.json())
+            .then(todos => {
+                todos.forEach(todo => addTodoToDOM(todo));
+            });
+
+        // Add a new task
+        addBtn.addEventListener("click", () => {
+            const task = todoInput.value.trim();
+            if (task !== "") {
+                fetch('/api/todos', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ task: task, completed: false }),
+                })
+                    .then(response => response.json())
+                    .then(todo => {
+                        addTodoToDOM(todo);
+                        todoInput.value = "";
+                    });
+            }
+        });
+
+        // Add a todo item to the DOM
+        function addTodoToDOM(todo) {
+            const li = document.createElement("li");
+            li.className = "todo-item";
+            li.innerHTML = `
+                <input type="text" value="${todo.task}" disabled>
+                <button class="edit-btn">Edit</button>
+                <button class="save-btn" style="display: none;">Save</button>
+                <button class="delete-btn">Delete</button>
+            `;
+            todoList.appendChild(li);
+
+            const editBtn = li.querySelector(".edit-btn");
+            const saveBtn = li.querySelector(".save-btn");
+            const deleteBtn = li.querySelector(".delete-btn");
+            const inputField = li.querySelector("input");
+
+            // Edit functionality
+            editBtn.addEventListener("click", () => {
+                inputField.disabled = false;
+                inputField.focus();
+                editBtn.style.display = "none";
+                saveBtn.style.display = "inline-block";
+            });
+
+            // Save functionality
+            saveBtn.addEventListener("click", () => {
+                const updatedTask = inputField.value.trim();
+                fetch(`/api/todos/${todo.id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ task: updatedTask, completed: todo.completed }),
+                })
+                    .then(() => {
+                        inputField.disabled = true;
+                        saveBtn.style.display = "none";
+                        editBtn.style.display = "inline-block";
+                    });
+            });
+
+            // Delete functionality
+            deleteBtn.addEventListener("click", () => {
+                fetch(`/api/todos/${todo.id}`, {
+                    method: 'DELETE'
+                })
+                    .then(() => {
+                        todoList.removeChild(li);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

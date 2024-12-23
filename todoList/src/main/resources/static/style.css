@@ -1,0 +1,121 @@
+@charset "UTF-8";
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color:rgba(243, 4, 223, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.todo-container {
+    background: #fc8ef3;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    padding: 30px;
+    width: 500px;
+    border: 1px solid rgb(156, 151, 151);
+}
+
+h1 {
+    font-size:x-large;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #6d0240;
+}
+
+.todo-form {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.todo-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-weight:normal;
+    font-size:large;
+}
+
+.add-btn {
+    padding: 10px 20px;
+    margin-left: 10px;
+    background-color: #860069;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.add-btn:hover {
+    background-color: #e006aa;
+}
+
+.todo-list {
+    list-style: none;
+    padding: 0;
+}
+
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #f1eff1;
+    border: 1px solid #1a1919;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.todo-item input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #818080fa;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-size: medium;
+    color:red;
+}
+.todo-input:hover{
+    background-color:lightpink;
+
+}
+
+.edit-btn, .save-btn, .delete-btn {
+    padding:10px;
+    color: rgb(7, 7, 7);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background-color: #007bff;
+    margin-right: 10px;
+}
+
+.edit-btn:hover {
+    background-color: #0056b3;
+}
+
+.save-btn {
+    background-color: #ffc107;
+    margin-right: 10px;
+}
+
+.save-btn:hover {
+    background-color: #e0a800;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
